@@ -72,7 +72,31 @@ if ($stmt->execute([$selector])) {
 					// Finally, destroy the session.
 					session_destroy();
 				}
+			} else {
+				echo json_encode([
+					"success" => false,
+					"message" => "Session is not alive.",
+					"data" => "",
+				]);
 			}
+		} else {
+			echo json_encode([
+				"success" => false,
+				"message" => "Session is not alive.",
+				"data" => "",
+			]);
 		}
+	} else {
+		echo json_encode([
+			"success" => false,
+			"message" => "Session is not alive.",
+			"data" => "",
+		]);
 	}
+} else {
+	echo json_encode([
+		"success" => false,
+		"message" => "Session is not alive.",
+		"data" => "",
+	]);
 }
