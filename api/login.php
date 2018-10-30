@@ -37,11 +37,11 @@ if ($stmt->execute([$username])) {
 			);
 
 			if ($stmt->execute([$selector, $series, $hashedToken, $username, $query['id'], date_format($date, 'Y-m-d')])) {
-                        $data = [
-                            "series" => $series,
-                            "token" => $token,
-                            "selector" => $selector
-                        ]
+				$data = [
+					"series" => $series,
+					"token" => $token,
+					"selector" => $selector,
+				];
 			}
 			// Authentication successful - Set session
 			echo json_encode([
