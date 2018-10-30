@@ -4,24 +4,27 @@
 session_start();
 require_once 'database.php';
 
+// Define variables and set to empty values
+$selector = "";
+
+$data = json_decode(file_get_contents('php://input'), true);
+$selector = $data["selector"];
+
 // Unset all of the session variables.
 $_SESSION = [];
 
-// If it's desired to kill the session, also delete the session cookie.
-// Note: This will destroy the session, and not just the session data!
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000,
-        $params["path"], $params["domain"],
-        $params["secure"], $params["httponly"]
-    );
+// Delete authentication token from DB
+$stmt = $db->prepare(
+	'DELETE FROM `auth_tokens` WHERE `selector` = ?'
+);
+
+if ($stmt->execute([$selector])) {
+	echo json_encode([
+		"success" => true,
+		"message" => "Log out was successful.",
+		"data" => "",
+	]);
 }
 
 // Finally, destroy the session.
 session_destroy();
-
-echo json_encode([
-    "success" => true,
-    "message" => "Log out was successful.",
-    "data" => ""
-]);
