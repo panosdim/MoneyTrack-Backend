@@ -18,13 +18,13 @@ $stmt = $db->prepare(
 	'DELETE FROM `auth_tokens` WHERE `selector` = ?'
 );
 
-if ($stmt->execute([$selector])) {
-	echo json_encode([
-		"success" => true,
-		"message" => "Log out was successful.",
-		"data" => "",
-	]);
-}
+$stmt->execute([$selector]);
 
 // Finally, destroy the session.
 session_destroy();
+
+echo json_encode([
+	"success" => true,
+	"message" => "Log out was successful.",
+	"data" => "",
+]);
