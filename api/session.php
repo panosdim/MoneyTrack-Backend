@@ -55,13 +55,11 @@ if ($stmt->execute([$selector])) {
                     // Unset all of the session variables.
                     $_SESSION = [];
 
-                    if ($stmt->execute([$query['username']])) {
-                        echo json_encode([
-                            "success" => false,
-                            "message" => "Session is not alive.",
-                            "data" => "",
-                        ]);
-                    }
+                    echo json_encode([
+                        "success" => false,
+                        "message" => "Session is not alive.",
+                        "data" => "",
+                    ]);
 
                     // Finally, destroy the session.
                     session_destroy();
